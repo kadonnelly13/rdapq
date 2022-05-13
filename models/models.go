@@ -118,11 +118,11 @@ type Domain struct {
 		ZoneSigned       bool   `json:"zoneSigned"`
 		DelegationSigned bool   `json:"delegationSigned"`
 		MaxSigLife       string `json:"maxSigLife"`
-		DSData           struct {
-			KeyTag     string   `json:"keyTage"`
-			Algorithm  string   `json:"algorithm"`
+		DSData           []struct {
+			KeyTag     int      `json:"keyTag"`
+			Algorithm  int      `json:"algorithm"`
 			Digest     string   `json:"digest"`
-			DigestType string   `json:"digestType"`
+			DigestType int      `json:"digestType"`
 			Events     []Events `json:"events"`
 			Links      []Links  `json:"links"`
 		} `json:"dsData"`
