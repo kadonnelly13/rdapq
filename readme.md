@@ -30,9 +30,9 @@ Full output
 RDAP (Registration Data Access Protocol) is a new protocol for registration data which will eventually replace the WHOIS protocol. More can be learned by reading the following ICANN webpage and associated RFC's.
 
 - https://www.icann.org/rdap
-- (RFC-7480 / HTTP Usage in the Registration Data Access Protocol (RDAP))[https://datatracker.ietf.org/doc/html/rfc7480]
-- (RFC-7481 / Security Services for the Registration Data Access Protocol (RDAP))[https://datatracker.ietf.org/doc/html/rfc7481]
-- (RFC-9082 / Registration Data Access Protocol (RDAP) Query Format)[https://datatracker.ietf.org/doc/html/rfc9082]
-- (RFC-9083 / JSON Responses for the Registration Data Access Protocol (RDAP))[https://datatracker.ietf.org/doc/html/rfc9083]
-- (RFC-9224 / Finding the Authoritative Registration Data Access Protocol (RDAP) Service)[https://datatracker.ietf.org/doc/html/rfc9224]
+- [RFC-7480 / HTTP Usage in the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc7480)
+- [RFC-7481 / Security Services for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc7481)
+- [RFC-9082 / Registration Data Access Protocol (RDAP) Query Format](https://datatracker.ietf.org/doc/html/rfc9082)
+- [RFC-9083 / JSON Responses for the Registration Data Access Protocol (RDAP)](https://datatracker.ietf.org/doc/html/rfc9083)
+- [RFC-9224 / Finding the Authoritative Registration Data Access Protocol (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc9224)
 
