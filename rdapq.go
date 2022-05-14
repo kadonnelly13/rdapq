@@ -20,11 +20,11 @@ func main() {
 	if *domain != "" && *ipv4 != "" {
 		fmt.Printf("\n(!) You have provided too many flags. Choose to query on a domain or an IPv4 address.")
 	} else if *domain != "" {
-		fmt.Printf("\n(+) Querying RDAP Service for domain: %v", *domain)
+		fmt.Printf("\n(+) Querying RDAP Service for domain:\t%v", *domain)
 		registryURL := RDAPServiceRegistryURL + "dns.json"
 		s.GetDomainData(domain, registryURL, outputLocation)
 	} else if *ipv4 != "" {
-		fmt.Printf("\n(+) Querying RDAP Service for IPv4 address: %v", *ipv4)
+		fmt.Printf("\n(+) Querying RDAP Service for IPv4 address:\t\t%v", *ipv4)
 		registryURL := RDAPServiceRegistryURL + "ipv4.json"
 		s.GetIPv4Data(ipv4, registryURL, outputLocation)
 	} else {

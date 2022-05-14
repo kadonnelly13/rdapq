@@ -172,7 +172,9 @@ func parseDomain(domainName string) (TLD string) {
 
 // Pretty print domain data
 func prettyPrintDomainData(serverResponseData m.Domain) {
-	fmt.Printf("\n\nRDAP Data for Domain: %v", serverResponseData.LdhName)
+	fmt.Printf("\n\nRDAP Query Results")
+	fmt.Printf("\n---------------------------------------------------------------")
+	fmt.Printf("\n\nDomain: %v", serverResponseData.LdhName)
 	fmt.Printf("\nRDAP Data Source: %v", serverResponseData.Links[0].Value)
 	fmt.Printf("\nLDH Name: %v", serverResponseData.LdhName)
 	fmt.Printf("\nUnicode Name: %v", serverResponseData.UnicodeName)
@@ -195,10 +197,24 @@ func prettyPrintDomainData(serverResponseData m.Domain) {
 		}
 	}
 
+	// Printing Statuses
+	fmt.Printf("\n\nDomain Statuses")
+	for _, status := range serverResponseData.Status {
+		fmt.Printf("\n\n\tStatus:\t\t%v", status)
+	}
+
 	// Printing Events
 	fmt.Printf("\n\nLatest DNS Events")
 	for _, event := range serverResponseData.Events {
 		fmt.Printf("\n\n\tAction:\t\t%v", event.EventAction)
 		fmt.Printf("\n\tDate:\t\t%v", event.EventDate)
+	}
+
+	// Printing Notices
+	fmt.Printf("\n\nNotices")
+	for _, notice := range serverResponseData.Notices {
+		fmt.Printf("\n\n\tTitle:\t\t%v", notice.Title)
+		fmt.Printf("\n\tDescription:\t%v", notice.Descriptions[0])
+		fmt.Printf("\n\tLinks:\t\t%v", notice.Links[0].Href)
 	}
 }

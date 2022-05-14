@@ -29,9 +29,9 @@ type Links struct {
 // Notices Data Structure
 // https://datatracker.ietf.org/doc/html/rfc9083#section-4.3
 type Notices struct {
-	Title       string   `json:"title"`
-	Description []string `json:"decription"`
-	Links       []Links  `json:"links"`
+	Title        string   `json:"title"`
+	Descriptions []string `json:"description"`
+	Links        []Links  `json:"links"`
 }
 
 // Remarks Data Structure

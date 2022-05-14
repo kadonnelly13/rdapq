@@ -38,7 +38,7 @@ func GetIPv4Data(ipv4 *string, registryURL string, outputLocation *string) {
 func getAuthoritativeIPServerURL(fullIPv4 string, registryURL string) string {
 	var bootstrapRegistryData m.BootstrapRegistry
 
-	fmt.Printf("\n(+) Finding authoritative RDAP Service URL for IPv4: %v", fullIPv4)
+	fmt.Printf("\n(+) Finding Authoritative Service URL for Range:\t%v", fullIPv4)
 
 	queryResponse, err := http.Get(registryURL)
 
@@ -65,7 +65,7 @@ func getAuthoritativeIPServerURL(fullIPv4 string, registryURL string) string {
 		for _, service := range bootstrapRegistryData.Services {
 			for _, serviceV4 := range service[0] {
 				if serviceV4 == fullIPv4 {
-					fmt.Printf("\n(+) Service URL for '%s' TLD: %v", serviceV4, service[1][0])
+					fmt.Printf("\n(+) Service URL for CIDR Range '%s':\t\t%v", serviceV4, service[1][0])
 					// Returning URL
 					return service[1][0]
 				}
@@ -141,24 +141,37 @@ func getFullIPv4(ipv4 string) string {
 
 // Pretty print ipv4 data
 func prettyPrintIPData(serverResponseData m.IPNetwork) {
-	fmt.Printf("\n\nRDAP Data for IPv4: %v", serverResponseData.Handle)
-	fmt.Printf("\nIP Address Name: %v", serverResponseData.Name)
-	fmt.Printf("\nIP Address Type: %v", serverResponseData.Type[0])
+	fmt.Printf("\n\nRDAP Query Results")
+	fmt.Printf("\n---------------------------------------------------------------")
+	fmt.Printf("\nIP Range:\t\t%v", serverResponseData.Handle)
+	fmt.Printf("\nIP Address Name:\t%v", serverResponseData.Name)
+	fmt.Printf("\nIP Address Type:\t%v", serverResponseData.Type[0])
+	fmt.Printf("\nStart Address Range:\t%v", serverResponseData.StartAddress)
+	fmt.Printf("\nEnd Address Range:\t%v", serverResponseData.EndAddress)
+	fmt.Printf("\nParent Handle:\t\t%v", serverResponseData.ParentHandle)
 
-	// Printing entites
-	fmt.Printf("\n\nEntites:")
-	for _, entity := range serverResponseData.Entities {
-		fmt.Printf("\n\n\tHandle: %v", entity.Handle)
-		fmt.Printf("\n\tRole: %v", entity.Roles)
+	/*
+		To-Do
+		Convert vCard interface{} to output
 
-		/*
-			To-Do
-			Convert vCard interface{} to output
-			fmt.Printf("\n\tvCard Data:")
-			for _, vcard := range entity.VcardArray {
-				fmt.Printf("\n\t\tName: %v", vcard)
+			// Printing entites
+			fmt.Printf("\n\nEntites:")
+			for _, entity := range serverResponseData.Entities {
+				fmt.Printf("\n\n\tHandle: %v", entity.Handle)
+				fmt.Printf("\n\tRole: %v", entity.Roles)
+
+
+					fmt.Printf("\n\tvCard Data:")
+					for _, vcard := range entity.VcardArray {
+						fmt.Printf("\n\t\tName: %v", vcard)
+					}
 			}
-		*/
+	*/
+
+	// Printing Statuses
+	fmt.Printf("\n\nStatuses")
+	for _, status := range serverResponseData.Status {
+		fmt.Printf("\n\n\tStatus:\t\t%v", status)
 	}
 
 	// Printing latest events
@@ -166,5 +179,15 @@ func prettyPrintIPData(serverResponseData m.IPNetwork) {
 	for _, event := range serverResponseData.Events {
 		fmt.Printf("\n\n\tAction:\t\t%v", event.EventAction)
 		fmt.Printf("\n\tDate:\t\t%v", event.EventDate)
+	}
+
+	// Printing Notices
+	fmt.Printf("\n\nNotices")
+	for _, notice := range serverResponseData.Notices {
+		fmt.Printf("\n\n\tTitle:\t\t%v", notice.Title)
+		fmt.Printf("\n\tDescription:\t%v", notice.Descriptions[0])
+		if notice.Links != nil {
+			fmt.Printf("\n\tLink:\t\t%v", notice.Links[0].Href)
+		}
 	}
 }
