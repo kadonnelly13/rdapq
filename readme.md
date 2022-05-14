@@ -144,7 +144,7 @@ RDAP (Registration Data Access Protocol) is a new protocol for registration data
 - [RFC-9224 / Finding the Authoritative Registration Data Access Protocol (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc9224)
 
 ## To-Do
-[] - vCard output printing
-[] - IPv6 lookup
-[] - Subdomain handling
-[] - Input file handling
+- [ ] vCard output printing
+- [ ] IPv6 lookup
+- [ ] Subdomain handling
+- [ ] Input file handling
