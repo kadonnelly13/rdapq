@@ -128,14 +128,9 @@ Notices
 
 ```
 
-Full output
+Saving full output to local JSON file
 
 `rdapq -domain=example.com -output=./example-results.json`
-
-## Output Example
-```bash
-
-```
 
 ## What is RDAP?
 
