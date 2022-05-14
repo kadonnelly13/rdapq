@@ -1,7 +1,7 @@
 # rdapq
 ![Build](https://github.com/kadonnelly13/rdapq/actions/workflows/build.yml/badge.svg)
 
-rdapq is a minimalistic RDAP querying tool meant to display useful details for security and network defenders.  This tool returns a subset of information from RDAP records in the CLI and for full information you can output the response data to a local JSONfile for more detailed inspection.
+rdapq is a simple RDAP querying tool meant to display useful details for security and network defenders.  This tool returns a subset of information from RDAP records in the CLI and for full information you can output the response data to a local JSONfile for more detailed inspection.
 
 ## Build
 ```bash
