@@ -129,14 +129,9 @@ Notices
 
 ```
 
-Full output
+Saving full output to local JSON file
 
 `rdapq -domain=example.com -output=./example-results.json`
-
-## Output Example
-```bash
-
-```
 
 ## What is RDAP?
 
@@ -150,7 +145,7 @@ RDAP (Registration Data Access Protocol) is a new protocol for registration data
 - [RFC-9224 / Finding the Authoritative Registration Data Access Protocol (RDAP) Service](https://datatracker.ietf.org/doc/html/rfc9224)
 
 ## To-Do
-[] - vCard output printing
-[] - IPv6 lookup
-[] - Subdomain handling
-[] - Input file handling
+- [ ] vCard output printing
+- [ ] IPv6 lookup
+- [ ] Subdomain handling
+- [ ] Input file handling
