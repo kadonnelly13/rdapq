@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net"
 	"net/http"
 	"os"
@@ -43,6 +42,10 @@ func getAuthoritativeIPServerURL(fullIPv4 string, registryURL string) string {
 	queryResponse, err := http.Get(registryURL)
 
 	if err != nil {
+		if os.IsTimeout(err) {
+			fmt.Printf("\n(!) Timeout querying IANA RDAP service registry. Please try again.\n")
+			os.Exit(1)
+		}
 		fmt.Printf("\n(!) Error querying IANA RDAP service registry:\n%v\n", err)
 		os.Exit(1)
 	}
@@ -86,42 +89,38 @@ func getAuthoritativeIPServerURL(fullIPv4 string, registryURL string) string {
 func queryAuthoritativeIPServer(RDAPServerURL string) m.IPNetwork {
 	var ResponseData m.IPNetwork
 
-	client := &http.Client{}
-
-	requestRDAPServer, err := http.NewRequest("GET", RDAPServerURL, nil)
+	queryResponse, err := http.Get(RDAPServerURL)
 
 	if err != nil {
-		fmt.Printf("\n(!) Error setting up new request to server:\n%v", err)
+		if os.IsTimeout(err) {
+			fmt.Printf("\n(!) Timeout querying remote RDAP server. Please try again.\n")
+			os.Exit(1)
+		}
+		fmt.Printf("\n(!) Error querying RDAP service URL:\n%v", err)
 		os.Exit(1)
-		return ResponseData
 	}
 
-	requestRDAPServer.Header.Add("Accept", "application/rdap+json")
-
-	responseRDAPService, err := client.Do(requestRDAPServer)
-
-	if err != nil {
-		fmt.Printf("\n(!) Error sending new request to server:\n%v", err)
-		os.Exit(1)
-		return ResponseData
-	}
-
-	responseRDAPServerData, err := ioutil.ReadAll(responseRDAPService.Body)
+	queryResponseBody, err := io.ReadAll(queryResponse.Body)
+	queryResponse.Body.Close()
 
 	if err != nil {
-		fmt.Printf("\n(!) Error reading new request to server:\n%v\n", err)
+		fmt.Printf("\n(!) Error reading query response:\n%v", err)
 		os.Exit(1)
+	} else if queryResponse.StatusCode == 200 {
+		err = json.Unmarshal(queryResponseBody, &ResponseData)
+
+		if err != nil {
+			fmt.Printf("\n(!) Error un-marshalling query response body:\n%v", err)
+			os.Exit(1)
+		}
 		return ResponseData
-	}
-
-	responseRDAPService.Body.Close()
-
-	err = json.Unmarshal(responseRDAPServerData, &ResponseData)
-
-	if err != nil {
-		fmt.Printf("\n(!) Error unmarshalling response data:\n%v\n", err)
+	} else if queryResponse.StatusCode == 429 {
+		// Querying too much 429 returned from IANA
+		fmt.Printf("\n(!) Returned 429...Slow down there cowboy on the requests you are being throttled. Go take a lap around the neighboorhood before your next query.")
 		os.Exit(1)
-		return ResponseData
+	} else {
+		fmt.Printf("\n(!) Did not recieve \"200 OK\" status code from IANA query: %v", queryResponse.StatusCode)
+		os.Exit(1)
 	}
 
 	return ResponseData
@@ -149,24 +148,6 @@ func prettyPrintIPData(serverResponseData m.IPNetwork) {
 	fmt.Printf("\nStart Address Range:\t%v", serverResponseData.StartAddress)
 	fmt.Printf("\nEnd Address Range:\t%v", serverResponseData.EndAddress)
 	fmt.Printf("\nParent Handle:\t\t%v", serverResponseData.ParentHandle)
-
-	/*
-		To-Do
-		Convert vCard interface{} to output
-
-			// Printing entites
-			fmt.Printf("\n\nEntites:")
-			for _, entity := range serverResponseData.Entities {
-				fmt.Printf("\n\n\tHandle: %v", entity.Handle)
-				fmt.Printf("\n\tRole: %v", entity.Roles)
-
-
-					fmt.Printf("\n\tvCard Data:")
-					for _, vcard := range entity.VcardArray {
-						fmt.Printf("\n\t\tName: %v", vcard)
-					}
-			}
-	*/
 
 	// Printing Statuses
 	fmt.Printf("\n\nStatuses")
