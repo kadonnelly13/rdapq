@@ -1,3 +1,3 @@
 module github.com/kadonnelly13/rdapq
 
-go 1.19
+go 1.20
