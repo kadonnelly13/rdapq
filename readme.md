@@ -149,3 +149,4 @@ RDAP (Registration Data Access Protocol) is a new protocol for registration data
 - [ ] IPv6 lookup
 - [ ] Subdomain handling
 - [ ] Input file handling
+- [ ] Figure out releases
