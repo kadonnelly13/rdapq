@@ -219,7 +219,9 @@ func prettyPrintDomainData(serverResponseData m.Domain) {
 	// Printing Entities
 	for _, entity := range serverResponseData.Entities {
 		fmt.Printf("\n\nEntities:")
-		fmt.Printf("\n\tType: %v", entity.PublicIds[0].Type)
+		if entity.PublicIds != nil {
+			fmt.Printf("\n\tType: %v", entity.PublicIds[0].Type)
+		}
 		fmt.Printf("\n\tHandle: %v", entity.Handle)
 		fmt.Printf("\n\tRole: %v", entity.Roles[0])
 		fmt.Printf("\n\tvCard Data:")
